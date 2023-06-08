@@ -30,7 +30,8 @@ public class NpcModel : Character
     {
         CharacterRoot = _root;
         NpcDialog = npc_dialog;
-        NpcDialogStart = GameObject.Find("Canvas/DialogWindow/DialogStart").GetComponent<Image>();
+        NpcDialogStart = GameObject.Find("Canvas/DialogStart").GetComponent<Image>();
+        NpcDialogStart.gameObject.SetActive(false);
     }
 
     public override void Awake()
@@ -55,6 +56,10 @@ public class NpcModel : Character
             {
                 IsDialog = false;
             }
+        }
+        else
+        {
+            NpcDialogStart.gameObject.SetActive(false);
         }
         //base.Updata();
     }

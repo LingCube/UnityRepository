@@ -338,45 +338,41 @@ namespace TaskMode
             {
                 case TaskStepType.ShouldGoToSomePlace:
                     return Vector3.Distance(TaskPerson.position, TaskPos) < 2f;
-                    break;
                 case TaskStepType.ShouldHaveDialog:
                     return TaskDialog.GetIsDialogFinished;
-                    break;
                 case TaskStepType.ShouldGiveSomething:
                     return TaskTool.GetCnt >= TaskCnt;
-                    break;
                 case TaskStepType.ShouldFightEnemy:
                     return InTaskCnt >= TaskCnt;
-                    break;
                 default:
                     break;
             }
             return true;
         }
 
-        protected virtual bool TaskAboutShouldGoToSomePlace(Vector3 pos)
-        {
-            if (Vector3.Distance(TaskPerson.position, pos) < 2f) return true;
-            return false;
-        }
+        //protected virtual bool TaskAboutShouldGoToSomePlace(Vector3 pos)
+        //{
+        //    if (Vector3.Distance(TaskPerson.position, pos) < 2f) return true;
+        //    return false;
+        //}
 
-        protected virtual bool TaskAboutShouldHaveDialog(NpcModel npc, Dialog dialog)
-        {
-            if (dialog.GetIsDialogFinished) return true;
-            return false;
-        }
+        //protected virtual bool TaskAboutShouldHaveDialog(NpcModel npc, Dialog dialog)
+        //{
+        //    if (dialog.GetIsDialogFinished) return true;
+        //    return false;
+        //}
 
-        protected virtual bool TaskAboutShouldGiveSomething(Tool tool, int cnt)
-        {
-            if (tool.GetCnt >= cnt) return true;
-            return false;
-        }
+        //protected virtual bool TaskAboutShouldGiveSomething(Tool tool, int cnt)
+        //{
+        //    if (tool.GetCnt >= cnt) return true;
+        //    return false;
+        //}
 
-        protected virtual bool TaskAboutShouldFightEnemy(Enemy enemy, int cnt)
-        {
-            if (TaskCnt >= cnt) return true;
-            return false;
-        }
+        //protected virtual bool TaskAboutShouldFightEnemy(Enemy enemy, int cnt)
+        //{
+        //    if (TaskCnt >= cnt) return true;
+        //    return false;
+        //}
 
         private bool is_create_task = false;
 

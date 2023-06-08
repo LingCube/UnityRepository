@@ -437,9 +437,9 @@ public class ControlScript : MonoBehaviour
         bagControl = new BagControl();
         taskControl = new TaskControl();
         player = new Player(GameObject.Find("Player").transform, GameObject.Find("PlayerCamera").GetComponent<Camera>());
-        tmpNpc = new NpcModel(GameObject.Find("NPC/Bar_NPC").transform, dialog);
         testenemy = new Enemy(test_enemy_trm);
         dialog = new Dialog(Resources.Load<TextAsset>("Text/GameTesting3_Text"), GameObject.Find("Canvas/DialogWindow"), 0.5f);
+        tmpNpc = new NpcModel(GameObject.Find("NPC/Bar_NPC").transform, dialog);
     }
 
     private void Start()
