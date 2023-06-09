@@ -139,7 +139,7 @@ public class Dialog
 
         }
         isTextListFinshed = TextListItemIdx >= TextList[TextListIdx].Length;
-        if (Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(0) || SteamVR_Actions.default_GrabPinch.GetStateDown(SteamVR_Input_Sources.RightHand)) 
         {
             if (isTextListFinshed)
             {
@@ -192,7 +192,7 @@ public class BagControl : BagView
     
     public override void Updata()
     {
-        if (SteamVR_Actions.default_OnClickOpenMenu.GetState(SteamVR_Input_Sources.Any) && SteamVR_Actions.default_OnClickMoveUp.GetStateDown(SteamVR_Input_Sources.Any))
+        if (SteamVR_Actions.default_OnClickOpenMenu.GetState(SteamVR_Input_Sources.LeftHand) && SteamVR_Actions.default_OnClickMoveUp.GetStateDown(SteamVR_Input_Sources.RightHand))
         {
             Open();
         }
@@ -372,7 +372,7 @@ public class TaskControl : TaskView
 
     public override void Updata()
     {
-        if (SteamVR_Actions.default_OnClickOpenMenu.GetState(SteamVR_Input_Sources.Any) && SteamVR_Actions.default_OnClickMoveLeft.GetStateDown(SteamVR_Input_Sources.Any))
+        if (SteamVR_Actions.default_OnClickOpenMenu.GetState(SteamVR_Input_Sources.LeftHand) && SteamVR_Actions.default_OnClickMoveLeft.GetStateDown(SteamVR_Input_Sources.RightHand))
         {
             Open();
         }

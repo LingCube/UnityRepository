@@ -6,7 +6,7 @@ using CharacterMode.ICharacter;
 using CharacterMode.Model;
 using TaskMode;
 using Engine;
-
+using Valve.VR;
 public class NpcModel : Character
 {
 
@@ -45,7 +45,7 @@ public class NpcModel : Character
         if (dialogtrm && dialogtrm.name == "Player")
         {
             if(!IsDialog) NpcDialogStart.gameObject.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F) || SteamVR_Actions.default_GrabPinch.GetStateDown(SteamVR_Input_Sources.RightHand))
             {            
                 NpcDialogStart.gameObject.SetActive(false);
                 NpcDialog.OpenDialog();

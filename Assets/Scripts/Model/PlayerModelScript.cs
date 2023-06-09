@@ -74,7 +74,9 @@ public class Player : Character, ICharacterProp
         if (!CharacterCamera.transform.GetComponent<SteamVR_Camera>())
         {
             CharacterCamera.gameObject.AddComponent<SteamVR_Camera>();
+            
         }
+        CharacterCameraVR = CharacterCamera.GetComponent<SteamVR_Camera>();
         OrgMaxHp = OrgMaxMp = 100;
         OrgAtk = OrgDef = 100;
         OnAtk = OnDef = 0;
@@ -218,34 +220,63 @@ public class Player : Character, ICharacterProp
 
     protected override void CharacterCameraControl()
     {
-        base.CharacterCameraControl();
-    }
+        //base.CharacterCameraControl();
+        Vector3 pos = HideCharacterCameraTransform.position;
+        CharacterCamera.transform.position = Vector3.Lerp(CharacterCamera.transform.position, pos, 5.0f * Time.deltaTime);
+        CharacterCamera.transform.rotation = HideCharacterCameraTransform.rotation;
+        CharacterCameraVR.head.rotation = CharacterCamera.transform.rotation;
+        Vector3 startpos = CharacterCamera.transform.position;
+        CharacterCamera.fieldOfView -= 500 * Time.deltaTime * Input.GetAxis("Mouse ScrollWheel");
+        CharacterCamera.fieldOfView = Mathf.Clamp(CharacterCamera.fieldOfView, 20, 100);
+        float movespeed = 100 * Time.deltaTime;
+        if (SteamVR_Actions.default_OnClickMoveLeft.GetState(SteamVR_Input_Sources.RightHand))
+        {
+            CharacterCamera.transform.RotateAround(CharacterRoot.position, Vector3.up, -movespeed);
+        }
+        if (SteamVR_Actions.default_OnClickMoveRight.GetState(SteamVR_Input_Sources.RightHand))
+        {
+            CharacterCamera.transform.RotateAround(CharacterRoot.position, Vector3.up, movespeed);
+        }
+        CharacterCamera.transform.RotateAround(CharacterRoot.position, Vector3.up, Input.GetAxis("Mouse X"));
+        Quaternion q = CharacterCamera.transform.rotation;
+        if (SteamVR_Actions.default_OnClickMoveUp.GetState(SteamVR_Input_Sources.RightHand))
+        {
+            CharacterCamera.transform.RotateAround(CharacterRoot.position, Vector3.Cross(CharacterCamera.transform.forward, CharacterRoot.up), -movespeed);
+        }
+        if (SteamVR_Actions.default_OnClickMoveDown.GetState(SteamVR_Input_Sources.RightHand))
+        {
+            CharacterCamera.transform.RotateAround(CharacterRoot.position, Vector3.Cross(CharacterCamera.transform.forward, CharacterRoot.up), movespeed);
+        }
+        CharacterCamera.transform.RotateAround(CharacterRoot.position, Vector3.Cross(CharacterCamera.transform.forward, CharacterRoot.up), Input.GetAxis("Mouse Y"));
+        if (CharacterCamera.transform.eulerAngles.x > 75)
+        {
+            CharacterCamera.transform.SetPositionAndRotation(startpos, q);
+        }
+        CharacterCamera.transform.LookAt(CharacterRoot);
+        
 
-    protected virtual void VR_CharacterCameraControl()
-    {
-        SteamVR_Action_Vector2 vec = SteamVR_Actions.default_TurnRotationVector2;
     }
 
     protected override void CharacterMove()
     {
         if (!IsMove) return;
         //base.CharacterMove();
-        if (Input.GetKey(KeyCode.W) || SteamVR_Actions.default_OnClickMoveUp.GetState(SteamVR_Input_Sources.Any)) 
+        if (Input.GetKey(KeyCode.W) || SteamVR_Actions.default_OnClickMoveUp.GetState(SteamVR_Input_Sources.LeftHand)) 
         {
             Vector3 wtar = Vector3.Cross(CharacterRoot.up, -CharacterCamera.transform.right);
             CharacterTar += wtar - new Vector3(0, wtar.y, 0);
         }
-        if (Input.GetKey(KeyCode.S) || SteamVR_Actions.default_OnClickMoveDown.GetState(SteamVR_Input_Sources.Any)) 
+        if (Input.GetKey(KeyCode.S) || SteamVR_Actions.default_OnClickMoveDown.GetState(SteamVR_Input_Sources.LeftHand)) 
         {
             Vector3 star = Vector3.Cross(CharacterRoot.up, CharacterCamera.transform.right);
             CharacterTar += star - new Vector3(0, star.y, 0);
         }
-        if (Input.GetKey(KeyCode.A) || SteamVR_Actions.default_OnClickMoveLeft.GetState(SteamVR_Input_Sources.Any))
+        if (Input.GetKey(KeyCode.A) || SteamVR_Actions.default_OnClickMoveLeft.GetState(SteamVR_Input_Sources.LeftHand))
         {
             Vector3 atar = Vector3.Cross(CharacterRoot.up, -CharacterCamera.transform.forward);
             CharacterTar += atar - new Vector3(0, atar.y, 0);
         }
-        if (Input.GetKey(KeyCode.D) || SteamVR_Actions.default_OnClickMoveRight.GetState(SteamVR_Input_Sources.Any))
+        if (Input.GetKey(KeyCode.D) || SteamVR_Actions.default_OnClickMoveRight.GetState(SteamVR_Input_Sources.LeftHand))
         {
             Vector3 dtar = Vector3.Cross(CharacterRoot.up, CharacterCamera.transform.forward);
             CharacterTar += dtar - new Vector3(0, dtar.y, 0);
@@ -271,7 +302,37 @@ public class Player : Character, ICharacterProp
 
     protected override void HideCharacterCameraTransformControl()
     {
-        base.HideCharacterCameraTransformControl();
+        //base.HideCharacterCameraTransformControl();
+        HideCharacterCameraTransform.position = CharacterRoot.position + CharacterCameraToCharacterOffset;
+        float movespeed = 100 * Time.deltaTime;
+        if (SteamVR_Actions.default_OnClickMoveLeft.GetState(SteamVR_Input_Sources.RightHand))
+        {
+            HideCharacterCameraTransform.RotateAround(CharacterRoot.position, Vector3.up, -movespeed);
+        }
+        if (SteamVR_Actions.default_OnClickMoveRight.GetState(SteamVR_Input_Sources.RightHand))
+        {
+            HideCharacterCameraTransform.RotateAround(CharacterRoot.position, Vector3.up, movespeed);
+        }
+        HideCharacterCameraTransform.RotateAround(CharacterRoot.position, Vector3.up, Input.GetAxis("Mouse X"));
+        Vector3 startpos = HideCharacterCameraTransform.position;
+        Quaternion q = HideCharacterCameraTransform.rotation;
+        if (SteamVR_Actions.default_OnClickMoveUp.GetState(SteamVR_Input_Sources.RightHand))
+        {
+            HideCharacterCameraTransform.RotateAround(CharacterRoot.position, Vector3.Cross(CharacterCamera.transform.forward, CharacterRoot.up), -movespeed);
+        }
+        if (SteamVR_Actions.default_OnClickMoveDown.GetState(SteamVR_Input_Sources.RightHand))
+        {
+            HideCharacterCameraTransform.RotateAround(CharacterRoot.position, Vector3.Cross(CharacterCamera.transform.forward, CharacterRoot.up), movespeed);
+        }
+        HideCharacterCameraTransform.RotateAround(CharacterRoot.position, Vector3.Cross(HideCharacterCameraTransform.forward, CharacterRoot.up), Input.GetAxis("Mouse Y"));
+        if (HideCharacterCameraTransform.eulerAngles.x > 75)
+        {
+            HideCharacterCameraTransform.SetPositionAndRotation(startpos, q);
+        }
+        HideCharacterCameraTransform.LookAt(CharacterRoot);
+        CharacterCameraToCharacterOffset = HideCharacterCameraTransform.position - CharacterRoot.position;
+
+
     }
 
     private bool IsMove = true;
@@ -294,12 +355,12 @@ public class Player : Character, ICharacterProp
             return; 
         }
         IsMove = true;
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || SteamVR_Actions.default_OnClickXAttack.GetStateDown(SteamVR_Input_Sources.Any)) 
         {
             IsMove = false;
             PlayerAni.Play(PlayerAniClipList[3].name);
         }
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) || SteamVR_Actions.default_OnClickYAttack.GetStateDown(SteamVR_Input_Sources.Any))
         {
             IsMove = false;
             PlayerAni.Play(PlayerAniClipList[4].name);

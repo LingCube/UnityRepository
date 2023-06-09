@@ -82,26 +82,6 @@
       "type": "boolean"
     },
     {
-      "name": "/actions/default/in/TouchTurnLeft",
-      "type": "vector2"
-    },
-    {
-      "name": "/actions/default/in/TouchTurnRight",
-      "type": "vector2"
-    },
-    {
-      "name": "/actions/default/in/TouchTurnUp",
-      "type": "vector2"
-    },
-    {
-      "name": "/actions/default/in/TouchTurnDown",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/default/in/TurnRotationVector2",
-      "type": "vector2"
-    },
-    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },

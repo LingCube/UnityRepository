@@ -169,46 +169,6 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Vector2 TouchTurnLeft
-        {
-            get
-            {
-                return SteamVR_Actions.default_TouchTurnLeft;
-            }
-        }
-        
-        public virtual SteamVR_Action_Vector2 TouchTurnRight
-        {
-            get
-            {
-                return SteamVR_Actions.default_TouchTurnRight;
-            }
-        }
-        
-        public virtual SteamVR_Action_Vector2 TouchTurnUp
-        {
-            get
-            {
-                return SteamVR_Actions.default_TouchTurnUp;
-            }
-        }
-        
-        public virtual SteamVR_Action_Boolean TouchTurnDown
-        {
-            get
-            {
-                return SteamVR_Actions.default_TouchTurnDown;
-            }
-        }
-        
-        public virtual SteamVR_Action_Vector2 TurnRotationVector2
-        {
-            get
-            {
-                return SteamVR_Actions.default_TurnRotationVector2;
-            }
-        }
-        
         public virtual SteamVR_Action_Vibration Haptic
         {
             get

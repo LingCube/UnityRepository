@@ -100,7 +100,6 @@ namespace CharacterMode
                 CharacterCamera.transform.position = Vector3.Lerp(CharacterCamera.transform.position, pos, 5.0f * Time.deltaTime);
                 CharacterCamera.transform.rotation = HideCharacterCameraTransform.rotation;
                 Vector3 startpos = CharacterCamera.transform.position;
-                //CharacterCamera.transform.Translate(Vector3.forward * Input.GetAxis("Mouse ScrollWheel"));
                 CharacterCamera.fieldOfView -= 500 * Time.deltaTime * Input.GetAxis("Mouse ScrollWheel");
                 CharacterCamera.fieldOfView = Mathf.Clamp(CharacterCamera.fieldOfView, 20, 100);
                 CharacterCamera.transform.RotateAround(CharacterRoot.position, Vector3.up, Input.GetAxis("Mouse X"));
@@ -120,11 +119,6 @@ namespace CharacterMode
                 Vector3 startpos = HideCharacterCameraTransform.position;
                 Quaternion q = HideCharacterCameraTransform.rotation;
                 HideCharacterCameraTransform.RotateAround(CharacterRoot.position, Vector3.Cross(HideCharacterCameraTransform.forward, CharacterRoot.up), Input.GetAxis("Mouse Y"));
-                //HideCharacterCameraTransform.Translate(Vector3.forward * Input.GetAxis("Mouse ScrollWheel"));
-                //if (CharacterCamera.fieldOfView < 20 || CharacterCamera.fieldOfView > 100)
-                //{
-                //    HideCharacterCameraTransform.position = startpos;
-                //}
                 if (HideCharacterCameraTransform.eulerAngles.x > 75)
                 {
                     HideCharacterCameraTransform.SetPositionAndRotation(startpos, q);
